@@ -28,42 +28,116 @@
     <Window.DataContext>
         <mvvm:ViewModel />
     </Window.DataContext>
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel HorizontalAlignment="Center">
-            <TextBlock Margin="0 0 0 20" TextAlignment="Center" FontWeight="Bold" FontSize="20">NosTale Windows</TextBlock>
-            <Border BorderThickness="1" BorderBrush="#5e2eb3">
-                <ListView
-                    AlternationCount="2"
-                    ItemsSource="{Binding Windows}" Height="350">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListViewItem">
-                                        <Grid>
-                                            <ContentPresenter
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                            </ContentPresenter>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.Template>
-                        <ControlTemplate>
-                            <Grid HorizontalAlignment="Left">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Border BorderBrush="#5e2eb3" BorderThickness="2 1 2 2">
+    <TabControl>
+        <TabItem>
+            <TabItem.Header>NosTale Windows</TabItem.Header>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center">
+                    <Border BorderThickness="1" BorderBrush="#5e2eb3">
+                        <ListView
+                            AlternationCount="2"
+                            ItemsSource="{Binding Windows}" Height="350">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}"
+                                       BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Grid>
+                                                    <ContentPresenter
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                                    </ContentPresenter>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <Grid HorizontalAlignment="Left">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Border BorderBrush="#5e2eb3" BorderThickness="2 1 2 2">
+                                            <Grid Width="900" VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1.5*" />
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Border Grid.Column="0" BorderBrush="#5e2eb3"
+                                                        BorderThickness="0 0 1 0 ">
+                                                    <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
+                                                               TextAlignment="Center">
+                                                        Title
+                                                    </TextBlock>
+                                                </Border>
+                                                <Border Grid.Column="1" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
+                                                    <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
+                                                               TextAlignment="Center">
+                                                        Game
+                                                    </TextBlock>
+                                                </Border>
+                                                <Border Grid.Column="2" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
+                                                    <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
+                                                               TextAlignment="Center">
+                                                        Level
+                                                    </TextBlock>
+                                                </Border>
+                                                <Border Grid.Column="3" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
+                                                    <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
+                                                               TextAlignment="Center">
+                                                        Repeats
+                                                    </TextBlock>
+                                                </Border>
+                                                <Border Grid.Column="4" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
+                                                    <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
+                                                               TextAlignment="Center">
+                                                        Current repeat
+                                                    </TextBlock>
+                                                </Border>
+                                                <Border Grid.Column="5" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
+                                                    <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
+                                                               TextAlignment="Center">
+                                                        Humanize
+                                                    </TextBlock>
+                                                </Border>
+                                                <Border Grid.Column="6" BorderBrush="#5e2eb3" BorderThickness="1 0 0 0">
+                                                    <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
+                                                               TextAlignment="Center">
+                                                        Should run
+                                                    </TextBlock>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+
+                                        <ScrollViewer Grid.Row="1">
+                                            <ScrollViewer.Style>
+                                                <Style TargetType="{x:Type ScrollViewer}">
+                                                    <Setter Property="BorderBrush" Value="Black" />
+                                                    <Setter Property="BorderThickness" Value="2"></Setter>
+                                                </Style>
+                                            </ScrollViewer.Style>
+                                            <ItemsPresenter></ItemsPresenter>
+                                        </ScrollViewer>
+                                    </Grid>
+
+                                </ControlTemplate>
+                            </ListView.Template>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
                                     <Grid Width="900" VerticalAlignment="Center">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1.5*" />
@@ -74,141 +148,124 @@
                                             <ColumnDefinition Width="1*" />
                                             <ColumnDefinition Width="1*" />
                                         </Grid.ColumnDefinitions>
-                                        <Border Grid.Column="0" BorderBrush="#5e2eb3" BorderThickness="0 0 1 0 ">
-                                            <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
-                                                       TextAlignment="Center">
-                                                Title
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Grid.Column="1" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
-                                            <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
-                                                       TextAlignment="Center">
-                                                Game
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Grid.Column="2" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
-                                            <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
-                                                       TextAlignment="Center">
-                                                Level
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Grid.Column="3" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
-                                            <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
-                                                       TextAlignment="Center">
-                                                Repeats
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Grid.Column="4" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
-                                            <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
-                                                       TextAlignment="Center">
-                                                Current repeat
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Grid.Column="5" BorderBrush="#5e2eb3" BorderThickness="1 0 ">
-                                            <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
-                                                       TextAlignment="Center">
-                                                Humanize
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Grid.Column="6" BorderBrush="#5e2eb3" BorderThickness="1 0 0 0">
-                                            <TextBlock FontSize="15" Margin="0 5" FontWeight="Bold"
-                                                       TextAlignment="Center">
-                                                Should run
-                                            </TextBlock>
-                                        </Border>
+                                        <TextBlock Margin="0 5" HorizontalAlignment="Center" TextAlignment="Center"
+                                                   Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                                   Text="{Binding Path=.Title}">
+                                        </TextBlock>
+                                        <ComboBox Margin="0 5" Grid.Column="1"
+                                                  HorizontalAlignment="Center"
+                                                  HorizontalContentAlignment="Center"
+                                                  VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                                  ItemsSource="{Binding Source={StaticResource GamesDataEnum}}"
+                                                  SelectedItem="{Binding Path=.Game}"
+                                                  IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+                                        <ComboBox Margin="0 5" Grid.Column="2" HorizontalAlignment="Center"
+                                                  HorizontalContentAlignment="Center"
+                                                  VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                                  Width="60" SelectedItem="{Binding Path=.Level}"
+                                                  IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                            <ComboBox.ItemsSource>
+                                                <x:Array Type="{x:Type sys:Int32}">
+                                                    <sys:Int32>1</sys:Int32>
+                                                    <sys:Int32>2</sys:Int32>
+                                                    <sys:Int32>3</sys:Int32>
+                                                    <sys:Int32>4</sys:Int32>
+                                                    <sys:Int32>5</sys:Int32>
+                                                </x:Array>
+                                            </ComboBox.ItemsSource>
+                                        </ComboBox>
+                                        <TextBox Margin="0 5" Grid.Column="3"
+                                                 Width="80"
+                                                 HorizontalAlignment="Center"
+                                                 HorizontalContentAlignment="Center"
+                                                 PreviewTextInput="PreviewText"
+                                                 Text="{Binding Repeats}"
+                                                 IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                        </TextBox>
+                                        <TextBlock Margin="0 5" Grid.Column="4" Width="100" TextAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                                   Text="{Binding Path=.CurrentRepeat }"
+                                                   IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                        </TextBlock>
+                                        <CheckBox Margin="0 5" Grid.Column="5" HorizontalAlignment="Center"
+                                                  HorizontalContentAlignment="Center"
+                                                  IsChecked="{Binding Path=.Humanize}" IsEnabled="False">
+                                        </CheckBox>
+                                        <CheckBox Margin="0 5" Grid.Column="6" HorizontalAlignment="Center"
+                                                  HorizontalContentAlignment="Center"
+                                                  IsChecked="{Binding Path=.Running}"
+                                                  IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                        </CheckBox>
                                     </Grid>
-                                </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Border>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal"
+                            Grid.Row="1">
+                    <StackPanel.Resources>
+                        <Style BasedOn="{StaticResource MaterialDesignPaperButton}" TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="10 0"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Command="{Binding ButtonStart}">Start</Button>
+                    <Button Command="{Binding ButtonRefreshWindows}">Refresh Windows</Button>
+                    <Button Command="{Binding ButtonStop}">Stop</Button>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>Options</TabItem.Header>
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
 
-                                <ScrollViewer Grid.Row="1">
-                                    <ScrollViewer.Style>
-                                        <Style TargetType="{x:Type ScrollViewer}">
-                                            <Setter Property="BorderBrush" Value="Black" />
-                                            <Setter Property="BorderThickness" Value="2"></Setter>
-                                        </Style>
-                                    </ScrollViewer.Style>
-                                    <ItemsPresenter></ItemsPresenter>
-                                </ScrollViewer>
-                            </Grid>
-
-                        </ControlTemplate>
-                    </ListView.Template>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Width="900" VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.5*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="0 5" HorizontalAlignment="Center" TextAlignment="Center"
-                                           Style="{StaticResource MaterialDesignBody1TextBlock}"
-                                           Text="{Binding Path=.Title}">
-                                </TextBlock>
-                                <ComboBox Margin="0 5" Grid.Column="1"
-                                          HorizontalAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                          ItemsSource="{Binding Source={StaticResource GamesDataEnum}}"
-                                          SelectedItem="{Binding Path=.Game}"
-                                          IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
-                                <ComboBox Margin="0 5" Grid.Column="2" HorizontalAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                          Width="60" SelectedItem="{Binding Path=.Level}"
-                                          IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-                                    <ComboBox.ItemsSource>
-                                        <x:Array Type="{x:Type sys:Int32}">
-                                            <sys:Int32>1</sys:Int32>
-                                            <sys:Int32>2</sys:Int32>
-                                            <sys:Int32>3</sys:Int32>
-                                            <sys:Int32>4</sys:Int32>
-                                            <sys:Int32>5</sys:Int32>
-                                        </x:Array>
-                                    </ComboBox.ItemsSource>
-                                </ComboBox>
-                                <TextBox Margin="0 5" Grid.Column="3"
-                                         Width="80"
-                                         HorizontalAlignment="Center"
-                                         HorizontalContentAlignment="Center"
-                                         PreviewTextInput="PreviewText"
-                                         Text="{Binding Repeats}"
-                                         IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-                                </TextBox>
-                                <TextBlock Margin="0 5" Grid.Column="4" Width="100" TextAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           Style="{StaticResource MaterialDesignBody1TextBlock}"
-                                           Text="{Binding Path=.CurrentRepeat }"
-                                           IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-                                </TextBlock>
-                                <CheckBox Margin="0 5" Grid.Column="5" HorizontalAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          IsChecked="{Binding Path=.Humanize}" IsEnabled="False">
-                                </CheckBox>
-                                <CheckBox Margin="0 5" Grid.Column="6" HorizontalAlignment="Center"
-                                          HorizontalContentAlignment="Center"
-                                          IsChecked="{Binding Path=.Running}"
-                                          IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-                                </CheckBox>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Border>
-        </StackPanel>
-
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
-            <StackPanel.Resources>
-                <Style BasedOn="{StaticResource MaterialDesignPaperButton}" TargetType="{x:Type Button}">
-                    <Setter Property="Margin" Value="10 0"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <Button Command="{Binding ButtonStart}">Start</Button>
-            <Button Command="{Binding ButtonRefreshWindows}">Refresh Windows</Button>
-            <Button Command="{Binding ButtonStop}">Stop</Button>
-        </StackPanel>
-    </Grid>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" Margin="10" BorderThickness="2" BorderBrush="#5e2eb3" CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Margin="10 5" TextWrapping="Wrap" TextAlignment="Center">Delay between every Update function</TextBlock>
+                        <TextBlock Margin="10 5 10 5" TextWrapping="Wrap" TextAlignment="Center">It may broke some function, for example bot will miss few fishes or woods, but may work better on older PCs. (Default: 50)</TextBlock>
+                        <TextBlock FontWeight="Bold" Margin="10 5 10 0" TextAlignment="Center">
+                            <TextBlock.Text>
+                                <Binding Path="UpdateInterval" StringFormat="{}{0} ms" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <Slider IsSnapToTickEnabled="True" TickFrequency="10" Margin="10" Value="{Binding UpdateInterval}" Minimum="0" Maximum="300" />
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="0" Grid.Row="1" Margin="10" BorderThickness="2" BorderBrush="#5e2eb3" CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Margin="10 5" TextWrapping="Wrap" TextAlignment="Center">Wait after pull up rod (in ms)</TextBlock>
+                        <TextBlock Margin="10 5 10 5" TextWrapping="Wrap" TextAlignment="Center">It won't try to pull up the same rod in this time. Semi double click bypass. (Default: 300)</TextBlock>
+                        <TextBlock FontWeight="Bold" Margin="10 0 10 0" TextAlignment="Center">
+                            <TextBlock.Text>
+                                <Binding Path="PullUpDelay" StringFormat="{}{0} ms" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <Slider IsSnapToTickEnabled="True" TickFrequency="10" Margin="10" Value="{Binding PullUpDelay}" Minimum="0" Maximum="1000" />
+                    </StackPanel>
+                </Border>
+                <Border Margin="10" Grid.Row="2" Grid.Column="0" BorderThickness="2" BorderBrush="#5e2eb3" CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock FontWeight="SemiBold" Margin="10 5" TextWrapping="Wrap" TextAlignment="Center">Wait between every key in event fish</TextBlock>
+                        <TextBlock Margin="10 5 10 5" TextWrapping="Wrap" TextAlignment="Center">(Default: 20)</TextBlock>
+                        <TextBlock FontWeight="Bold" Margin="10" TextAlignment="Center">
+                            <TextBlock.Text>
+                                <Binding Path="EventFishDelay" StringFormat="{}{0} ms" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <Slider IsSnapToTickEnabled="True" TickFrequency="10" Margin="10" Value="{Binding EventFishDelay}" Minimum="0" Maximum="1000" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 using NosGame.MVVM;
@@ -19,13 +21,12 @@ public class Fishpond : BaseGame
     private int _usedCoupons;
 
     private int _waitTicks = 20;
-    private Rods _lastRod = Rods.None;
-    private bool _holdingRod;
+    private HashSet<Rods> _lastRod = new HashSet<Rods>();
     private readonly Vec3b _fishColor = new(255, 247, 198);
     private readonly Vec3b _eventFishColor = new(46, 46, 46);
     private readonly Vec3b _vampireColor = new(43, 46, 213);
 
-    private const int DelayAfterPulling = 300;
+    private readonly int _delayAfterPulling;
 
     private enum Rods
     {
@@ -41,12 +42,15 @@ public class Fishpond : BaseGame
     public Fishpond(NosTaleWindow window)
     {
         Window = window;
+        _delayAfterPulling = 300 + Window.ViewModel.PullUpDelay;
     }
 
     public override void Update()
     {
         var screenshot = NativeImports.GetWindowScreenshot(Window.Handle);
         var ssMat = screenshot.ToMat();
+        Console.WriteLine("Current state: " + _currentState);
+        Console.WriteLine("Rods: " + string.Join(", ", _lastRod));
 
         switch (_currentState)
         {
@@ -172,8 +176,6 @@ public class Fishpond : BaseGame
                     }
                 }
 
-                if (_holdingRod) return;
-
                 var fishLeft = ssMat[new Rect(ssMat.Cols / 2 - 120, ssMat.Rows / 2 - 15, 5, 5)];
                 var fishTop = ssMat[new Rect(ssMat.Cols / 2 + 36, ssMat.Rows / 2 - 63, 5, 5)];
                 var fishBottom = ssMat[new Rect(ssMat.Cols / 2 - 3, ssMat.Rows / 2 + 44, 5, 5)];
@@ -190,7 +192,7 @@ public class Fishpond : BaseGame
                 var fishBottomVampire = VampireAround(fishBottomVampireCheck);
                 var fishRightVampire = VampireAround(fishRightVampireCheck);
 
-                if (_lastRod != Rods.Left && !fishLeftVampire)
+                if (!_lastRod.Contains(Rods.Left) && !fishLeftVampire)
                 {
                     for (var x = 0; x < fishLeft.Cols; x++)
                     {
@@ -214,12 +216,11 @@ public class Fishpond : BaseGame
                             //     }).Start();
                             // }).Start();
                             NativeImports.ClickLeftArrow(Window.Handle);
-                            _lastRod = Rods.Left;
+                            _lastRod.Add(Rods.Left);
                             new Task(() =>
                             {
-                                Task.Delay(DelayAfterPulling).Wait();
-                                if (_lastRod == Rods.Left)
-                                    _lastRod = Rods.None;
+                                Task.Delay(_delayAfterPulling).Wait();
+                                _lastRod.Remove(Rods.Left);
                             }).Start();
                             return;
                         }
@@ -227,7 +228,7 @@ public class Fishpond : BaseGame
                 }
 
 
-                if (_lastRod != Rods.Up && !fishTopVampire)
+                if (!_lastRod.Contains(Rods.Up) && !fishTopVampire)
                 {
                     for (var x = 0; x < fishTop.Cols; x++)
                     {
@@ -251,19 +252,18 @@ public class Fishpond : BaseGame
                             //     }).Start();
                             // }).Start();
                             NativeImports.ClickUpArrow(Window.Handle);
-                            _lastRod = Rods.Up;
+                            _lastRod.Add(Rods.Up);
                             new Task(() =>
                             {
-                                Task.Delay(DelayAfterPulling).Wait();
-                                if (_lastRod == Rods.Up)
-                                    _lastRod = Rods.None;
+                                Task.Delay(_delayAfterPulling).Wait();
+                                _lastRod.Remove(Rods.Up);
                             }).Start();
                             return;
                         }
                     }
                 }
 
-                if (_lastRod != Rods.Down && !fishBottomVampire)
+                if (!_lastRod.Contains(Rods.Down) && !fishBottomVampire)
                 {
                     for (var x = 0; x < fishBottom.Cols; x++)
                     {
@@ -287,19 +287,18 @@ public class Fishpond : BaseGame
                             //     }).Start();
                             // }).Start();
                             NativeImports.ClickDownArrow(Window.Handle);
-                            _lastRod = Rods.Down;
+                            _lastRod.Add(Rods.Down);
                             new Task(() =>
                             {
-                                Task.Delay(DelayAfterPulling).Wait();
-                                if (_lastRod == Rods.Down)
-                                    _lastRod = Rods.None;
+                                Task.Delay(_delayAfterPulling).Wait();
+                                _lastRod.Remove(Rods.Down);
                             }).Start();
                             return;
                         }
                     }
                 }
 
-                if (_lastRod != Rods.Right && !fishRightVampire)
+                if (!_lastRod.Contains(Rods.Right) && !fishRightVampire)
                 {
                     for (var x = 0; x < fishRight.Cols; x++)
                     {
@@ -323,12 +322,13 @@ public class Fishpond : BaseGame
                             //     }).Start();
                             // }).Start();
                             NativeImports.ClickRightArrow(Window.Handle);
-                            _lastRod = Rods.Right;
+                            _lastRod.Add(Rods.Right);
                             new Task(() =>
                             {
-                                Task.Delay(DelayAfterPulling).Wait();
-                                if (_lastRod == Rods.Right)
-                                    _lastRod = Rods.None;
+                                Console.WriteLine("Before: " + DateTime.Now.Millisecond);
+                                Task.Delay(_delayAfterPulling).Wait();
+                                Console.WriteLine("After: " + DateTime.Now.Millisecond);
+                                _lastRod.Remove(Rods.Right);
                             }).Start();
                             return;
                         }
@@ -365,40 +365,66 @@ public class Fishpond : BaseGame
                     break;
                 }
 
+                if (_waitTicks-- > 0) return;
+
+                var delay = (Window.ViewModel.EventFishDelay == 0 ? 1 : Window.ViewModel.EventFishDelay) /
+                            (Window.ViewModel.UpdateInterval == 0 ? 1 : Window.ViewModel.UpdateInterval);
+                WaitTicks(delay > 0 ? delay : 1);
+                
                 var eventFishBarMat = ssMat[new Rect(ssMat.Cols / 2 - 170, ssMat.Rows / 2 - 9, 400, 35)];
 
                 var eventFishLeft = Images.FindTemplate(eventFishBarMat, Images.ArrowLeft);
-
-                if (eventFishLeft.Value > 0.9)
-                {
-                    NativeImports.ClickLeftArrow(Window.Handle);
-                    break;
-                }
-
                 var eventFishRight = Images.FindTemplate(eventFishBarMat, Images.ArrowRight);
-
-
-                if (eventFishRight.Value > 0.9)
-                {
-                    NativeImports.ClickRightArrow(Window.Handle);
-                    break;
-                }
-
                 var eventFishUp = Images.FindTemplate(eventFishBarMat, Images.ArrowUp);
-
-
-                if (eventFishUp.Value > 0.9)
-                {
-                    NativeImports.ClickUpArrow(Window.Handle);
-                    break;
-                }
-
                 var eventFishDown = Images.FindTemplate(eventFishBarMat, Images.ArrowDown);
 
-                if (eventFishDown.Value > 0.9)
+                var events = new[] {eventFishLeft.Value, eventFishRight.Value, eventFishUp.Value, eventFishDown.Value};
+
+                var indexOfMax = events.ToList().IndexOf(events.Max());
+
+                switch (indexOfMax)
                 {
-                    NativeImports.ClickDownArrow(Window.Handle);
+                    case 0:
+                        NativeImports.ClickLeftArrow(Window.Handle);
+                        break;
+                    case 1:
+                        NativeImports.ClickRightArrow(Window.Handle);
+                        break;
+                    case 2:
+                        NativeImports.ClickUpArrow(Window.Handle);
+                        break;
+                    case 3:
+                        NativeImports.ClickDownArrow(Window.Handle);
+                        break;
                 }
+                
+                // if (eventFishLeft.Value > 0.9)
+                // {
+                //     NativeImports.ClickLeftArrow(Window.Handle);
+                //     break;
+                // }
+                //
+                //
+                //
+                // if (eventFishRight.Value > 0.9)
+                // {
+                //     NativeImports.ClickRightArrow(Window.Handle);
+                //     break;
+                // }
+                //
+                //
+                //
+                // if (eventFishUp.Value > 0.9)
+                // {
+                //     NativeImports.ClickUpArrow(Window.Handle);
+                //     break;
+                // }
+                //
+                //
+                // if (eventFishDown.Value > 0.9)
+                // {
+                //     NativeImports.ClickDownArrow(Window.Handle);
+                // }
 
                 break;
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -59,6 +60,43 @@ public sealed class ViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    private int _updateInterval = Properties.Settings.Default.UpdateInterval;
+    public int UpdateInterval
+    {
+        get => _updateInterval;
+        set
+        {
+            SetField(ref _updateInterval, value);
+            OnPropertyChanged();
+            Properties.Settings.Default.UpdateInterval = value;
+        }
+    }
+
+    private int _eventFishDelay = Properties.Settings.Default.EventFishDelay;
+    public int EventFishDelay
+    {
+        get => _eventFishDelay;
+        set
+        {
+            SetField(ref _eventFishDelay, value);
+            OnPropertyChanged();
+            Properties.Settings.Default.EventFishDelay = value;
+        }
+    }
+
+    private int _pullUpDelay = Properties.Settings.Default.PullUpDelay;
+
+    public int PullUpDelay
+    {
+        get => _pullUpDelay;
+        set
+        {
+            SetField(ref _pullUpDelay, value);
+            OnPropertyChanged();
+            Properties.Settings.Default.PullUpDelay = value;
+        }
+    }
     
 
     public ViewModel()
@@ -100,7 +138,7 @@ public sealed class ViewModel : INotifyPropertyChanged
             if (!sb.ToString().Contains("NosTale")) return true;
             var newTitle = "NosTale - " + wnd;
             SetWindowText(wnd, newTitle);
-            this.Windows.Add(new NosTaleWindow(wnd, newTitle));
+            this.Windows.Add(new NosTaleWindow(wnd, newTitle, this));
             return true;
 
         }, IntPtr.Zero);

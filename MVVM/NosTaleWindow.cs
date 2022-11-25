@@ -9,6 +9,7 @@ namespace NosGame.MVVM;
 
 public sealed class NosTaleWindow : INotifyPropertyChanged
 {
+    public ViewModel ViewModel { get; set; }
     public IntPtr Handle { get; }
     public string Title { get; set; }
 
@@ -77,17 +78,18 @@ public sealed class NosTaleWindow : INotifyPropertyChanged
         }
     }
 
-    public NosTaleWindow(IntPtr handle, string title)
+    public NosTaleWindow(IntPtr handle, string title, ViewModel viewModel)
     {
         Handle = handle;
         Title = title;
+        ViewModel = viewModel;
     }
     
     public Timer? GameTimer;
 
     public void StartBot()
     {
-        GameTimer = new Timer(50);
+        GameTimer = new Timer(ViewModel.UpdateInterval == 0 ? 1 : ViewModel.UpdateInterval);
         
         GameTimer.Elapsed += delegate
         {
