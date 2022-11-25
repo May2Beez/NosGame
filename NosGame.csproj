@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <LangVersion>default</LangVersion>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>images\NosGame_icon.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
+      <PackageReference Include="OpenCvSharp4" Version="4.6.0.20220608" />
+      <PackageReference Include="OpenCvSharp4.Extensions" Version="4.6.0.20220608" />
+      <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.6.0.20220608" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="images\arrow_down.jpg" />
+      <EmbeddedResource Include="images\arrow_left.jpg" />
+      <EmbeddedResource Include="images\arrow_right.jpg" />
+      <EmbeddedResource Include="images\arrow_up.jpg" />
+      <EmbeddedResource Include="images\coupon_check.jpg" />
+      <EmbeddedResource Include="images\NosGame_icon.ico" />
+      <EmbeddedResource Include="images\not_enough_points.png" />
+      <EmbeddedResource Include="images\open_game.jpg" />
+      <EmbeddedResource Include="images\score_digits.png" />
+      <EmbeddedResource Include="images\starting_game.png" />
+      <EmbeddedResource Include="images\start_game.png" />
+      <EmbeddedResource Include="images\result.png" />
+      <EmbeddedResource Include="images\level_button.png" />
+    </ItemGroup>
+
+</Project>
